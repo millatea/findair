@@ -2,7 +2,7 @@
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>마음찾기 다이어리</title>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Hi+Melody&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Hi+Melody&family=Gaegu:wght@700&family=Gamja+Flower&family=Nanum+Pen+Script&family=Single+Day&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff1f4;--card:#fff;--pk:#f59db4;--pk2:#e86f8f;--tx:#6b3a48;--sub:#a87484;--line:#f8d3dd;--paper:#fffaf6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a1a20;--card:#3a252d;--tx:#ffe6ec;--sub:#d9a9b7;--line:#59343f;--paper:#4a3139}}
@@ -138,6 +138,22 @@ h2::after{content:"✦";font-size:.55em;color:var(--pk);margin-left:4px}
 .it{filter:drop-shadow(0 2px 2px #0003)}
 #done>div[aria-hidden]{display:none}
 .scr>*{flex-shrink:0}
+.stk{object-fit:contain;display:block;pointer-events:none}
+.dlg{position:absolute;inset:0;background:#0006;display:grid;place-items:center;padding:24px;z-index:20}.dlg[hidden]{display:none}.dlg .card{width:100%}
+.rotbar{display:flex;align-items:center;gap:6px;margin-top:8px}.rotbar input{flex:1;accent-color:var(--pk2)}
+.cc{display:flex;gap:10px;flex-wrap:wrap;margin:10px 2px 4px}
+.dot{width:34px;height:34px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1.5px var(--line);cursor:pointer;padding:0;display:block}.dot.sel{box-shadow:0 0 0 3px var(--pk2)}
+.wheel{background:conic-gradient(#f55,#fd5,#5d5,#5df,#55f,#f5d,#f55);position:relative;overflow:hidden}.wheel input{opacity:0;position:absolute;inset:0;width:100%;height:100%;cursor:pointer}
+.st3{display:flex;position:relative;margin:4px 0 18px}.st3::before{content:"";position:absolute;top:6px;left:16%;right:16%;height:2px;background:var(--line)}.st3 div{flex:1;text-align:center;font-size:12px;color:var(--sub);position:relative}.st3 i{display:block;width:14px;height:14px;border-radius:50%;background:var(--line);margin:0 auto 4px}.st3 .on{color:var(--pk2)}.st3 .on i{background:var(--pk2);box-shadow:0 0 0 4px #f59db44d}
+.drop{border:2px dashed var(--pk);border-radius:22px;padding:16px;text-align:center;background:var(--card);line-height:1.5}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.sc{border:2.5px solid var(--line);border-radius:18px;background:var(--card);padding:6px;font:inherit;font-size:13px;color:var(--tx);cursor:pointer;position:relative}.sc.sel{border-color:var(--pk2);box-shadow:0 6px 14px #e86f8f40}.sc.sel::after{content:"✓";position:absolute;top:-7px;right:-7px;background:var(--pk2);color:#fff;border-radius:50%;width:22px;height:22px;line-height:22px;font-size:13px}
+.sp{position:relative;height:96px;border-radius:12px;overflow:hidden;margin-bottom:6px}.sp i{position:absolute;width:34px;height:28px;border:3px solid #fff;border-bottom-width:8px;box-shadow:0 2px 4px #0003}.sp b{position:absolute;font-weight:400;line-height:1}
+.airp{border-radius:14px;overflow:hidden;box-shadow:0 10px 24px #e86f8f40;margin-bottom:10px}.airp .mp{width:100%;display:block;flex:none}
+.ths{display:flex;gap:8px;overflow-x:auto;padding:10px 2px}.th{flex:none;width:56px;border-radius:8px;overflow:hidden;border:2px solid transparent;cursor:pointer;box-shadow:0 2px 6px #0002}.th.sel{border-color:var(--pk2)}.th .mp{width:100%;display:block;flex:none}.th .pn{display:none}
+.hero2{position:relative;height:200px;display:flex;justify-content:center;align-items:flex-end;margin:6px 0 4px}.hero2 .blob{position:absolute;left:50%;top:0;width:210px;height:210px;margin-left:-105px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffdbe6 58%,#ffc4d6);opacity:.85}
+.sk{position:absolute;color:var(--pk2);opacity:.7}.s1{left:14%;top:10%;font-size:20px}.s2{right:16%;top:6%;font-size:24px}.s3{right:8%;top:46%;font-size:14px}
+.dlg input{width:100%;border:1.5px solid var(--pk);border-radius:12px;padding:12px;font:inherit;background:var(--card);color:var(--tx);margin:8px 0 12px}
+#etitle{cursor:pointer}#etitle::after{content:" ✎";font-size:.8em;color:var(--pk2)}
 </style></head><body>
 <div id="app">
 
@@ -188,12 +204,12 @@ h2::after{content:"✦";font-size:.55em;color:var(--pk);margin-left:4px}
 
 <!-- 홈 -->
 <section class="scr" id="home">
- <div class="top"><h2 class="grow" id="hname" style="color:var(--pk2)">마음찾기 다이어리 💗</h2><button class="ib" data-go="order" aria-label="주문">🛍️</button></div>
+ <div class="top"><h2 class="grow" id="hname" style="color:var(--pk2)">마음찾기 다이어리 💗</h2><button class="ib" id="rn" aria-label="다이어리 이름 바꾸기">✏️</button><button class="ib" data-go="order" aria-label="주문">🛍️</button></div>
  <div class="mem" style="justify-content:flex-start;margin:0 0 6px"><div><span style="width:40px;height:40px;line-height:40px;font-size:24px">🐱</span></div><div><span style="width:40px;height:40px;line-height:40px;font-size:24px">🐶</span></div><div><span style="width:40px;height:40px;line-height:40px;font-size:24px">🐰</span></div><div><span style="width:40px;height:40px;line-height:40px;font-size:24px">🦊</span></div></div>
  <div class="card" style="margin-bottom:12px"><b class="jua" id="hmeta"></b><div class="sub">지금까지 <span id="cnt">3</span>개의 페이지가 있어요</div></div>
  <div id="list"></div>
  <button class="btn" style="margin-top:6px" data-go="order">🛍️ 실물 다이어리로 주문하기</button>
- <div style="height:80px"></div>
+ <p class="sub" style="font-size:11px;text-align:center;margin:10px 0 80px">스티커 일러스트: Microsoft Fluent UI Emoji (MIT License)</p>
  <button class="btn fab" id="add" aria-label="새 페이지">＋</button>
 </section>
 
@@ -208,6 +224,7 @@ h2::after{content:"✦";font-size:.55em;color:var(--pk);margin-left:4px}
 <section class="scr" id="edit">
  <div class="top"><button class="ib" data-go="home" aria-label="뒤로">‹</button><div class="t jua" id="etitle">우리의 행복한 하루 💗</div><button class="ib" id="del" aria-label="선택 삭제">🗑️</button><button class="ib" id="szm" aria-label="작게">－</button><button class="ib" id="szp" aria-label="크게">＋</button><button class="chip sel" id="save">완료</button></div>
  <div class="page" id="pg"></div>
+ <div class="rotbar"><button class="ib" id="rl" aria-label="왼쪽으로 회전">↺</button><input type="range" id="rr" min="-180" max="180" value="0" aria-label="회전 각도"><button class="ib" id="rrr" aria-label="오른쪽으로 회전">↻</button></div>
  <div class="chips" id="tabs"></div>
  <div id="panel"></div>
 </section>
@@ -234,6 +251,20 @@ h2::after{content:"✦";font-size:.55em;color:var(--pk);margin-left:4px}
  <div class="card" style="margin-top:12px" id="sum"></div>
  <div style="height:12px"></div>
  <button class="btn ghost" data-go="preview" style="margin-bottom:10px">📖 실물 미리보기 · 목업 보기</button><button class="btn" id="buy">주문하기</button><div style="height:12px"></div>
+</section>
+<section class="scr" id="ai2">
+ <div class="top"><button class="ib" id="a2back" aria-label="뒤로">‹</button><div class="t jua">AI 다이어리 만들기</div><span style="width:36px"></span></div>
+ <div class="st3" id="a2st"></div>
+ <div id="a2body"></div>
+ <div class="grow"></div>
+ <button class="btn" id="a2btn" style="margin-top:14px"></button>
+</section>
+<section class="scr" id="air">
+ <div class="top"><button class="ib" data-go="newp" aria-label="뒤로">‹</button><div class="t jua">AI 다이어리 완성!</div><span style="width:36px"></span></div>
+ <div id="airb"></div>
+ <div class="grow"></div>
+ <button class="btn ghost" id="airedit" style="margin-top:12px">이 페이지 직접 꾸미기</button>
+ <button class="btn" id="airsave" style="margin-top:10px">다이어리에 저장 💗</button>
 </section>
 <section class="scr" id="load" style="text-align:center"><div class="grow"></div><div id="lbun" class="bounce"></div><h3 style="margin:14px 0 10px;font-family:'Hi Melody';font-size:24px;color:var(--pk2)">AI가 다이어리를 만들고 있어요...</h3><div class="pbar"><i id="lbar"></i></div><div class="sub" id="lpct" style="text-align:right;margin-top:4px">0%</div><p class="sub">소중한 추억을 예쁘게 꾸미고 있어요!</p><div class="grow"></div></section>
 <section class="scr" id="done" style="text-align:center">
@@ -262,6 +293,7 @@ h2::after{content:"✦";font-size:.55em;color:var(--pk);margin-left:4px}
  <button class="btn ghost" data-go="order" style="margin-bottom:10px">표지·재질 바꾸기</button>
  <button class="btn" id="buy2">이대로 주문하기</button>
 </section>
+<div class="dlg" id="dlg" hidden><div class="card"><div class="lbl" id="dl" style="margin-top:0"></div><input id="di" maxlength="20" aria-label="이름"><div class="tbar"><button class="btn ghost" id="dc">취소</button><button class="btn" id="dk">저장</button></div></div></div>
 <nav class="nav" id="nav"><button class="on" data-go="home">🏠<small>홈</small></button><button data-nt="1">📖<small>다이어리</small></button><button class="plus" id="add2" aria-label="새 페이지">＋</button><button data-nt="1">👥<small>서클</small></button><button data-nt="1">⚙️<small>설정</small></button></nav>
 <div class="toast" id="toast" role="status"></div>
 </div>
@@ -297,33 +329,34 @@ $('#n-manual').onclick=()=>{const e={name:'새 페이지 '+(D.entries.length+1),
 $('#n-ai').onclick=()=>go('ai');
 
 /* 에디터 */
-const ST={스티커:['💗','🎀','🧸','🌸','⭐','🍒','🐰','🌷','☁️','🍓','📷','💌'],색지:['#ffe3ea','#e9dcff','#fff1d6','#dcebff','#d8f3e6','#ffd1dc'],테이프:['#f9b8cc','#c9b6f2','#ffe08a','#a9d6f5'],사진:['🌅','🎡','🍰','🌊']};
+const ST={스티커:['💗','🎀','🧸','🌸','⭐','🍒','🐰','🌷','☁️','🍓','📷','💌','🦋','🌼','🍰','🎈','💐','🐻'],색지:['#ffe3ea','#e9dcff','#fff1d6','#dcebff','#d8f3e6','#ffd1dc'],테이프:['#f9b8cc','#c9b6f2','#ffe08a','#a9d6f5'],사진:['🌅','🎡','🍰','🌊']};
 const PH=['linear-gradient(#f6a5b7,#8bb7e8)','linear-gradient(#ffcf9e,#c88fc8)','linear-gradient(#a6d9ee,#f7c6c6)','linear-gradient(#f9c0a0,#e6788f)','linear-gradient(#b3e0d1,#f3d4a5)','linear-gradient(#c6b3ee,#f9bcd1)'];
 function openEdit(e){cur=e;selId=null;$('#etitle').textContent=e.name;renderPage();renderTabs();go('edit')}
 function renderTabs(){$('#tabs').innerHTML=['스티커','색지','텍스트','테이프','사진'].map(t=>`<button class="chip ${t===tab?'sel':''}" data-t="${t}">${t}</button>`).join('');
  const p=$('#panel');
- if(tab==='텍스트')p.innerHTML='<div class="tbar"><input id="ti" placeholder="오늘도 행복해! 💗" maxlength="24"><button class="chip sel" id="ta">추가</button></div>';
+ if(tab==='텍스트')p.innerHTML='<div class="tbar"><input id="ti" placeholder="오늘도 행복해! 💗" maxlength="24"><button class="chip sel" id="ta">추가</button></div>'+fontPanel();
  else if(tab==='색지')p.innerHTML='<div class="tray">'+ST.색지.map(c=>`<button class="sw" style="background:${c}" data-c="${c}" aria-label="색지"></button>`).join('')+'</div>';
  else if(tab==='테이프')p.innerHTML='<div class="tray" style="grid-template-columns:repeat(4,1fr)">'+ST.테이프.map(c=>`<button class="sw" style="background:${c}" data-k="${c}" aria-label="마스킹테이프"></button>`).join('')+'</div>';
  else if(tab==='사진')p.innerHTML='<div class="tray" style="grid-template-columns:repeat(6,1fr)"><button class="sw" data-up="1" aria-label="내 사진 올리기" style="font-size:22px">📷</button>'+PH.map((g,i)=>`<button class="sw" style="background:${g}" data-ph="${i}" aria-label="사진"></button>`).join('')+'</div>';
- else p.innerHTML='<div class="tray">'+ST.스티커.map(s=>`<button data-s="${s}">${s}</button>`).join('')+'</div>'}
+ else p.innerHTML='<div class="tray">'+ST.스티커.map(s=>`<button data-s="${s}">${stk(s,34)}</button>`).join('')+'</div>'}
 $('#tabs').onclick=e=>{const b=e.target.closest('[data-t]');if(b){tab=b.dataset.t;renderTabs()}};
 $('#panel').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.f||b.dataset.tc){setTxt(b);return}
  if(b.dataset.up){pickPhotos(vs=>{vs.forEach(v=>add({t:'ph',v,x:30+Math.random()*100,y:50+Math.random()*150,s:0,r:-5+Math.random()*10,w:140,h:120}));renderTabs()});return}
- if(b.id==='ta'){const v=$('#ti').value.trim();if(v){add({t:'text',v,x:30,y:140,s:22})}$('#ti').value=''}
+ if(b.id==='ta'){const v=$('#ti').value.trim();if(v){add({t:'text',v,x:30,y:140,s:22,f:tf,c:tc})}$('#ti').value=''}
  else if(b.dataset.s)add({t:'st',v:b.dataset.s,x:60+Math.random()*120,y:60+Math.random()*200,s:44});
  else if(b.dataset.c){cur.bgc=b.dataset.c;renderPage()}
  else if(b.dataset.k)add({t:'tape',v:b.dataset.k,x:40+Math.random()*100,y:30+Math.random()*260,s:0,r:-8+Math.random()*16});
  else if(b.dataset.ph!==undefined)add({t:'ph',v:PH[+b.dataset.ph],x:50+Math.random()*80,y:60+Math.random()*180,s:0,r:-6+Math.random()*12,w:+b.dataset.ph>5?140:96,h:+b.dataset.ph>5?120:80})};
-function add(o){o.id=nid++;o.r=o.r||0;cur.items.push(o);selId=o.id;renderPage()}
-function renderPage(){const pg=$('#pg');pg.style.backgroundColor=cur.bgc||'';pg.innerHTML='';
+function add(o){o.id=nid++;o.r=o.r||0;cur.items.push(o);selId=o.id;renderPage();syncRot()}
+function renderPage(){const pg=$('#pg');pg.style.backgroundColor=cur.bgc||'';pg.style.backgroundImage=cur.bgi||'';pg.innerHTML='';
  cur.items.forEach(o=>{const d=document.createElement('div');d.className='it'+(o.id===selId?' sel':'');d.style.left=o.x+'px';d.style.top=o.y+'px';d.style.transform=`rotate(${o.r}deg)`;
-  if(o.t==='text'){d.textContent=o.v;d.style.cssText+=`font-family:Jua;font-size:${o.s}px;color:#d4577b;background:#fff8;padding:6px 12px;border-radius:14px`}
-  else if(o.t==='st'){d.textContent=o.v;d.style.fontSize=o.s+'px'}
-  else if(o.t==='tape'){d.className+=' tape';d.style.background=o.v}
+  if(o.t==='text'){d.textContent=o.v;d.style.cssText+=`font-family:'${o.f||'Jua'}',Jua;font-size:${o.s}px;color:${o.c||'#d4577b'};background:#fff8;padding:6px 12px;border-radius:14px`}
+  else if(o.t==='st'){d.innerHTML=stk(o.v,o.s);d.style.fontSize=o.s+'px'}
+  else if(o.t==='tape'){d.className+=' tape';d.style.background=o.v;d.style.width=(o.w||90)+'px'}
   else{d.className+=' pol';d.innerHTML=`<i style="background:${o.v};width:${o.w||96}px;height:${o.h||80}px"></i>`}
   d.onpointerdown=e=>drag(e,o,d);pg.append(d)})}
-function drag(e,o,d){e.preventDefault();selId=o.id;$$('.it').forEach(x=>x.classList.remove('sel'));d.classList.add('sel');
+function drag(e,o,d){e.preventDefault();selId=o.id;syncRot();$$('.it').forEach(x=>x.classList.remove('sel'));d.classList.add('sel');
  const sx=e.clientX-o.x,sy=e.clientY-o.y;d.setPointerCapture(e.pointerId);
  d.onpointermove=m=>{o.x=m.clientX-sx;o.y=m.clientY-sy;d.style.left=o.x+'px';d.style.top=o.y+'px'};
  d.onpointerup=()=>{d.onpointermove=null}}
@@ -368,13 +401,13 @@ function cover(){const c=CV[D.cover];return `<div class="cv m-${D.mat}" style="b
 function bookHTML(W,H,st,sh){const T=Math.round(14+D.pages/200*26),bg=CV[D.cover][0],pg='background:repeating-linear-gradient(90deg,#fff 0 2px,#e8dcd8 2px 3px)',pv='background:repeating-linear-gradient(0deg,#fff 0 2px,#e8dcd8 2px 3px)';
  return `<div class="book" style="width:${W}px;height:${H}px;${st}">${sh?shf(W,H,T):''}<div class="f" style="width:${W}px;height:${H}px;transform:translateZ(${T/2}px)">${cover()}</div><div class="f" style="width:${W}px;height:${H}px;transform:translateZ(${-T/2}px) rotateY(180deg);background:${bg};filter:brightness(.85)"></div><div class="f" style="width:${T}px;height:${H}px;left:${-T/2}px;transform:rotateY(-90deg);background:${bg};filter:brightness(.9);display:grid;place-items:center"><span class="sptx">${D.title}</span></div><div class="f" style="width:${T-4}px;height:${H-8}px;top:4px;left:${W-(T-4)/2}px;transform:rotateY(90deg);${pg}"></div><div class="f" style="width:${W-6}px;height:${T-4}px;left:3px;top:${-(T-4)/2}px;transform:rotateX(90deg);${pv}"></div><div class="f" style="width:${W-6}px;height:${T-4}px;left:3px;top:${H-(T-4)/2}px;transform:rotateX(90deg);${pv}"></div></div>`}
 function itm(o){const s=`left:${o.x}px;top:${o.y}px;transform:rotate(${o.r}deg)`;
- if(o.t==='text')return `<div class="it" style="${s};font-family:Jua;font-size:${o.s}px;color:#d4577b;background:#fff8;padding:6px 12px;border-radius:14px">${o.v}</div>`;
- if(o.t==='st')return `<div class="it" style="${s};font-size:${o.s}px">${o.v}</div>`;
- if(o.t==='tape')return `<div class="it tape" style="${s};background:${o.v}"></div>`;
+ if(o.t==='text')return `<div class="it" style="${s};font-family:'${o.f||'Jua'}',Jua;font-size:${o.s}px;color:${o.c||'#d4577b'};background:#fff8;padding:6px 12px;border-radius:14px">${o.v}</div>`;
+ if(o.t==='st')return `<div class="it" style="${s};font-size:${o.s}px">${stk(o.v,o.s)}</div>`;
+ if(o.t==='tape')return `<div class="it tape" style="${s};background:${o.v};width:${o.w||90}px"></div>`;
  return `<div class="it pol" style="${s}"><i style="background:${o.v};width:${o.w||96}px;height:${o.h||80}px"></i></div>`}
 function mini(e,n){if(!e)return `<div class="mp"><div style="display:grid;place-items:center;font-size:90px;color:#f5c7d3">🌸</div><small class="pn">${n}</small></div>`;
  const body=e.items.length?e.items.map(itm).join(''):`<div style="position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:Jua;font-size:34px;color:#c24a6e;background:${e.bg}"><span style="font-size:100px">${e.emoji}</span>${e.name}</div>`;
- return `<div class="mp"><div style="background:${e.bgc||'var(--paper)'}">${body}</div><small class="pn">${n}</small></div>`}
+ return `<div class="mp"><div style="background:${e.bgi?e.bgi+',':''}${e.bgc||'var(--paper)'}">${body}</div><small class="pn">${n}</small></div>`}
 function fit(){$$('.mp').forEach(m=>{m.firstElementChild.style.transform=`scale(${m.offsetWidth/394})`})}
 const fi=document.createElement('input');fi.type='file';fi.accept='image/*';fi.multiple=true;fi.hidden=true;document.body.append(fi);
 let fcb=null;
@@ -382,7 +415,7 @@ function pickPhotos(cb){fcb=cb;fi.value='';fi.click()}
 function readPhoto(f){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);r(`url(${c.toDataURL('image/jpeg',.82)}) center/cover`)};im.onerror=()=>r(null);im.src=fr.result};fr.onerror=()=>r(null);fr.readAsDataURL(f)})}
 fi.onchange=async()=>{const vs=[];for(const f of fi.files){const v=await readPhoto(f);if(v){PH.push(v);vs.push(v)}}if(vs.length&&fcb){fcb(vs);toast(vs.length+'장의 사진을 넣었어요 📷')}else toast('사진을 불러오지 못했어요')};
 $('#aiup').onclick=()=>pickPhotos(vs=>{vs.forEach(v=>sel.add(PH.indexOf(v)));renderAI()});
-function rsz(k){const o=cur.items.find(i=>i.id===selId);if(!o)return toast('크기를 바꿀 항목을 먼저 선택해주세요');if(o.t==='ph'){o.w=(o.w||96)*k;o.h=(o.h||80)*k}else if(o.t==='tape')return;else o.s=Math.max(12,o.s*k);renderPage()}
+function rsz(k){const o=cur.items.find(i=>i.id===selId);if(!o)return toast('크기를 바꿀 항목을 먼저 선택해주세요');if(o.t==='ph'){o.w=(o.w||96)*k;o.h=(o.h||80)*k}else if(o.t==='tape'){o.w=Math.min(300,Math.max(30,(o.w||90)*k))}else o.s=Math.max(12,o.s*k);renderPage()}
 $('#szm').onclick=()=>rsz(.87);$('#szp').onclick=()=>rsz(1.15);
 function thumb(e){const p=e.items.find(i=>i.t==='ph');return p?`<div class="thumb" style="background:${p.v}"></div>`:`<div class="thumb" style="background:${e.bg}">${e.emoji}</div>`}
 function shf(W,H,T){return [[3,4,5,.6],[14,18,18,.4]].map(([x,y,b,o])=>`<div class="f" style="width:${W}px;height:${H}px;transform:translateZ(${-T/2-1}px) translate(${x}px,${y}px);background:#000;filter:blur(${b}px);opacity:${o}"></div>`).join('')}
@@ -399,6 +432,58 @@ $('#lbun').innerHTML=bunny(150);
 function loadAnim(){const b=$('#lbar'),p=$('#lpct');b.style.transition='none';b.style.width='0%';p.textContent='0%';setTimeout(()=>{b.style.transition='width 1.1s ease';b.style.width='100%'},30);let n=0;const iv=setInterval(()=>{n=Math.min(100,n+9);p.textContent=n+'%';if(n>=100)clearInterval(iv)},100)}
 $('#add2').onclick=()=>go('newp');
 $$('[data-nt]').forEach(b=>b.onclick=()=>toast('곳 만나요! 준비 중인 기능이에요 🎀'));
+const FL=Object.fromEntries(Object.entries({'💗':'Growing heart','🎀':'Ribbon','🧸':'Teddy bear','🌸':'Cherry blossom','⭐':'Star','🍒':'Cherries','🐰':'Rabbit face','🌷':'Tulip','☁️':'Cloud','🍓':'Strawberry','📷':'Camera','💌':'Love letter','🦋':'Butterfly','✉️':'Envelope','🌼':'Blossom','🍰':'Shortcake','🎈':'Balloon','💐':'Bouquet','🐻':'Bear'}).map(([k,v])=>[k.replace(/\uFE0F/g,''),v]));
+function stk(v,s){const n=FL[v.replace(/\uFE0F/g,'')];if(!n)return v;const f=n.toLowerCase().replace(/ /g,'_');return `<img class="stk" draggable="false" alt="${v}" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/${encodeURIComponent(n)}/3D/${f}_3d.png" style="width:${s}px;height:${s}px" onerror="this.replaceWith(document.createTextNode(this.alt))">`}
+const FN=[['손글씨','Hi Melody'],['둥근','Jua'],['단정','Gowun Dodum'],['필기','Gaegu'],['귀염','Gamja Flower'],['펜글씨','Nanum Pen Script'],['일기','Single Day']],TC=['#d4577b','#5b3340','#7a5af0','#2f8fe0','#2fa37a','#f08a24','#ffffff'];
+let tf='Hi Melody',tc='#d4577b',dcb=null;
+function fontPanel(){return `<div class="chips" style="flex-wrap:wrap">${FN.map(([l,f])=>`<button class="chip ${tf===f?'sel':''}" data-f="${f}" style="font-family:'${f}'">${l}</button>`).join('')}</div><div class="tray" style="grid-template-columns:repeat(7,1fr)">${TC.map(c=>`<button class="sw" data-tc="${c}" style="background:${c}" aria-label="글자색"></button>`).join('')}</div>`}
+function setTxt(b){if(b.dataset.f)tf=b.dataset.f;if(b.dataset.tc)tc=b.dataset.tc;const o=cur.items.find(i=>i.id===selId&&i.t==='text');if(o){if(b.dataset.f)o.f=tf;if(b.dataset.tc)o.c=tc;renderPage()}const v=$('#ti')?$('#ti').value:'';renderTabs();if(v&&$('#ti'))$('#ti').value=v}
+function ask(label,val,cb){$('#dl').textContent=label;$('#di').value=val;$('#dlg').hidden=false;$('#di').focus();dcb=cb}
+$('#dk').onclick=()=>{const v=$('#di').value.trim();if(v&&dcb)dcb(v);$('#dlg').hidden=true};
+$('#dc').onclick=()=>{$('#dlg').hidden=true};
+$('#di').onkeydown=e=>{if(e.key==='Enter')$('#dk').click()};
+$('#rn').onclick=()=>ask('다이어리 이름',D.title,v=>{D.title=v;renderHome();toast('이름을 바꾸었어요 🎀')});
+$('#etitle').onclick=()=>{if(cur)ask('페이지 이름',cur.name,v=>{cur.name=v;$('#etitle').textContent=v})};
+function selIt(){return cur&&cur.items.find(i=>i.id===selId)}
+function syncRot(){const o=selIt();$('#rr').value=o?Math.round(o.r):0}
+function rot(d){const o=selIt();if(!o)return toast('돌릴 항목을 먼저 선택해주세요');o.r=Math.round(((o.r+d+540)%360)-180);renderPage();syncRot()}
+$('#rl').onclick=()=>rot(-15);$('#rrr').onclick=()=>rot(15);
+$('#rr').oninput=()=>{const o=selIt();if(o){o.r=+$('#rr').value;renderPage()}};
+function fontPanel(){return `<div class="chips" style="flex-wrap:wrap">${FN.map(([l,f])=>`<button class="chip ${tf===f?'sel':''}" data-f="${f}" style="font-family:'${f}'">${l}</button>`).join('')}</div><div class="cc">${TC.map(c=>`<button class="dot ${tc===c?'sel':''}" data-tc="${c}" style="background:${c}" aria-label="글자색 ${c}"></button>`).join('')}<label class="dot wheel" aria-label="색 직접 고르기"><input type="color" id="tcp" value="${/^#[0-9a-f]{6}$/i.test(tc)?tc:'#d4577b'}"></label></div>`}
+$('#panel').addEventListener('input',e=>{if(e.target.id!=='tcp')return;tc=e.target.value;const o=selIt();if(o&&o.t==='text'){o.c=tc;renderPage()}});
+const PW=Math.min(430,innerWidth)-36;
+function fit(){$$('.mp').forEach(m=>{const c=m.firstElementChild;c.style.width=PW+'px';c.style.height=PW*4/3+'px';c.style.transform=`scale(${m.offsetWidth/PW})`})}
+function bunny(s=100){return `<svg width="${s}" height="${s*1.07}" viewBox="0 0 140 150" aria-hidden="true"><defs><radialGradient id="bw" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ffeaf0"/></radialGradient><linearGradient id="ei" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd3e0"/><stop offset="1" stop-color="#ffb0c7"/></linearGradient><linearGradient id="hh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffa3c0"/><stop offset="1" stop-color="#ef5f8d"/></linearGradient></defs><ellipse cx="70" cy="144" rx="42" ry="5.5" fill="#e86f8f" opacity=".18"/><g fill="url(#bw)" stroke="#f3cbd7" stroke-width="1.2" stroke-linejoin="round"><path d="M47 60C34 36 37 8 50 6C63 5 65 34 61 60Z"/><path d="M79 60C83 34 91 6 103 9C114 12 107 38 93 60Z"/><path d="M33 114C33 90 49 81 70 81C91 81 107 90 107 114C107 133 91 142 70 142C49 142 33 133 33 114Z"/><ellipse cx="70" cy="68" rx="38" ry="31"/></g><path d="M50 54C43 36 44 18 50 15C56 14 57 34 55 54Z" fill="url(#ei)"/><path d="M85 54C87 34 92 17 99 19C106 21 101 38 92 54Z" fill="url(#ei)"/><g fill="none" stroke="#7a4458" stroke-width="2.4" stroke-linecap="round"><path d="M51 68q4.5-5.5 9 0"/><path d="M80 68q4.5-5.5 9 0"/></g><ellipse cx="70" cy="75" rx="2.6" ry="2" fill="#f58aa8"/><path d="M66.5 79q3.5 3.5 7 0" fill="none" stroke="#c9748c" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="45" cy="77" rx="7" ry="4" fill="#ffb7ca" opacity=".55"/><ellipse cx="95" cy="77" rx="7" ry="4" fill="#ffb7ca" opacity=".55"/><path d="M70 134C46 119 52 101 70 110C88 101 94 119 70 134Z" fill="url(#hh)"/><ellipse cx="58" cy="108" rx="3.5" ry="2" fill="#fff" opacity=".6" transform="rotate(-25 58 108)"/><g fill="url(#bw)" stroke="#f3cbd7" stroke-width="1.2"><ellipse cx="50" cy="114" rx="8" ry="6.5"/><ellipse cx="90" cy="114" rx="8" ry="6.5"/></g></svg>`}
+function bookSVG(s=130){return `<svg width="${s}" height="${s*1.1}" viewBox="0 0 140 154" aria-hidden="true"><defs><linearGradient id="bk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc4d6"/><stop offset="1" stop-color="#f2799e"/></linearGradient></defs><ellipse cx="70" cy="148" rx="48" ry="5" fill="#e86f8f" opacity=".2"/><g transform="rotate(-5 70 76)"><rect x="20" y="10" width="102" height="130" rx="9" fill="url(#bk)"/><rect x="20" y="10" width="13" height="130" rx="6" fill="#fff" opacity=".22"/><rect x="108" y="10" width="5" height="130" fill="#d94f7b" opacity=".55"/><rect x="42" y="30" width="62" height="64" rx="8" fill="#fff" opacity=".22"/><path d="M73 84C51 70 56 52 73 60C90 52 95 70 73 84Z" fill="#fff"/><path d="M52 104h42" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8"/><path d="M60 112h26" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".55"/><path d="M96 10v34l8-6 8 6V10z" fill="#ffe3ec"/></g></svg>`}
+$('#hero1').className='hero2';$('#hero1').innerHTML=`<i class="blob"></i><span class="sk s1">✦</span><span class="sk s2">♡</span><span class="sk s3">✦</span><span style="position:relative;z-index:1">${bookSVG(150)}</span><span style="position:relative;z-index:2;margin-left:-38px">${bunny(100)}</span>`;
+$('#lbun').innerHTML=bunny(150);
+const gm=c=>`repeating-linear-gradient(0deg,${c} 0 16px,transparent 16px 32px),repeating-linear-gradient(90deg,${c} 0 16px,transparent 16px 32px)`;
+const AS={'핑크 러블리':{bg:'#ffe3ea',st:['🎀','💗','🧸','🌸'],tp:['#f9b8cc','#ffd6e0'],f:'Hi Melody',c:'#d4577b',t:'우리의 행복한 하루 💗'},'보라 꿈결':{bg:'#e9dcff',st:['☁️','⭐','🦋','💗'],tp:['#c9b6f2','#e3d8ff'],f:'Gaegu',c:'#7a5af0',t:'꿈같은 하루'},'빈티지 무드':{bg:'#f3e5c8',st:['📷','🌷','💌','🌼'],tp:['#d9bf8a','#c9a77a'],f:'Gamja Flower',c:'#8a5a3c',t:'그날의 기록'},'체크 패턴':{bg:'#ffe9ee',bgi:gm('#f9a8c04d'),st:['🍒','🎀','🍓','🐰'],tp:['#f9b8cc','#a9d6f5'],f:'Single Day',c:'#d4577b',t:'우리의 여름방학'},'여행 다이어리':{bg:'#dcebff',st:['📷','☁️','⭐','🌼'],tp:['#a9d6f5','#ffe08a'],f:'Nanum Pen Script',c:'#2f6fb0',t:'우리의 첫 여행'},'감성 일기':{bg:'#fff1d6',st:['🌼','☁️','💌','🍰'],tp:['#ffe08a','#f9b8cc'],f:'Gowun Dodum',c:'#a2603f',t:'오늘의 기록'}};
+let a2=1,AIR={p:[],i:0};
+function renderA2(){
+ $('#a2st').innerHTML=['사진 선택','스타일 선택','완성'].map((l,i)=>`<div class="${i<a2?'on':''}"><i></i>${l}</div>`).join('');
+ const b=$('#a2body');
+ if(a2===1){b.innerHTML=`<div class="drop"><div style="font-size:30px">🖼️</div><b class="jua">사진을 선택하거나<br>여러 장을 한 번에 업로드하세요!</b><div class="sub">최대 20장까지 가능해요</div><button class="btn ghost" data-up2="1" style="width:auto;padding:8px 20px;margin-top:8px">📷 사진 추가하기</button></div><div class="lbl">선택한 사진 ${sel.size}장</div><div class="ph">${PH.map((g,i)=>`<button style="background:${g}" class="${sel.has(i)?'sel':''}" data-i="${i}" aria-label="사진 ${i+1}"></button>`).join('')}</div>`;$('#a2btn').textContent='다음 →'}
+ else{const a=[...sel],p0=PH[a[0]]||PH[0],p1=PH[a[1]]||PH[1];b.innerHTML=`<div class="lbl" style="margin-top:0">원하는 스타일을 선택해주세요</div><div class="sg">${Object.keys(AS).map(k=>{const s=AS[k];return `<button class="sc ${k===sty?'sel':''}" data-s="${k}"><div class="sp" style="background:${s.bgi?s.bgi+',':''}${s.bg}"><i style="left:7px;top:10px;background:${p0};transform:rotate(-8deg)"></i><i style="right:7px;top:36px;background:${p1};transform:rotate(7deg)"></i><b style="left:8px;bottom:5px">${stk(s.st[0],20)}</b><b style="right:10px;top:5px">${stk(s.st[1],20)}</b></div>${k}</button>`}).join('')}</div>`;$('#a2btn').textContent='AI로 꾸미기 ✨'}}
+$('#a2body').onclick=e=>{if(e.target.closest('[data-up2]'))return pickPhotos(vs=>{vs.forEach(v=>{if(sel.size<20)sel.add(PH.indexOf(v))});renderA2()});
+ const p=e.target.closest('[data-i]');if(p){const i=+p.dataset.i;if(sel.has(i))sel.delete(i);else if(sel.size<20)sel.add(i);else toast('최대 20장까지 가능해요');renderA2();return}
+ const s=e.target.closest('[data-s]');if(s){sty=s.dataset.s;renderA2()}};
+$('#a2btn').onclick=()=>{if(a2===1){if(!sel.size)return toast('사진을 1장 이상 골라주세요');a2=2;renderA2()}else genAI()};
+$('#a2back').onclick=()=>{if(a2===2){a2=1;renderA2()}else go('newp')};
+$('#n-ai').onclick=()=>{a2=1;renderA2();go('ai2')};
+function genAI(){go('load');loadAnim();setTimeout(()=>{const s=AS[sty],ph=[...sel].map(i=>PH[i]),W=PW,H=W*4/3,pages=[];
+ const T=[[[.06,.12,-5],[.46,.3,4],[.1,.58,-3]],[[.5,.1,4],[.08,.34,-4],[.46,.6,3]],[[.08,.4,3],[.48,.12,-4],[.3,.64,-2]]];
+ for(let k=0,n=0;k<ph.length;k+=3,n++){const g=ph.slice(k,k+3),t=T[n%3],it=[],sz=g.length===1?[.62,.5]:[.4,.32];
+  g.forEach((v,j)=>{const p=g.length===1?[.2,.24,-3]:t[j];it.push({id:nid++,t:'ph',v,x:p[0]*W,y:p[1]*H,r:p[2],s:0,w:sz[0]*W,h:sz[1]*W});it.push({id:nid++,t:'tape',v:s.tp[j%2],x:p[0]*W+sz[0]*W*.2,y:p[1]*H-8,r:-6+j*8,s:0,w:Math.max(50,sz[0]*W*.5)})});
+  it.push({id:nid++,t:'text',v:n?(n+1)+'번째 이야기':s.t,x:.08*W,y:.03*H,s:Math.round(.062*W),f:s.f,c:s.c,r:-2});
+  [[.78,.05],[.04,.86],[.72,.87],[.44,.54]].forEach((p,j)=>it.push({id:nid++,t:'st',v:s.st[j%4],x:p[0]*W,y:p[1]*H,s:Math.round(.11*W),r:-12+j*9}));
+  pages.push({name:'AI 다이어리 '+(n+1),date:new Date().toLocaleDateString('ko-KR'),emoji:'✨',bg:'linear-gradient(135deg,#ffc6d9,#e9dcff)',bgc:s.bg,bgi:s.bgi,items:it})}
+ AIR={p:pages,i:0};go('air');renderAIR()},1300)}
+function renderAIR(){const e=AIR.p[AIR.i],n=AIR.p.length;
+ $('#airb').innerHTML=`<div class="airp">${mini(e,AIR.i+1)}</div><div class="tbar" style="justify-content:center;align-items:center;gap:14px"><button class="chip" data-ai="-1" aria-label="이전">‹</button><span class="sub">${AIR.i+1} / ${n}</span><button class="chip" data-ai="1" aria-label="다음">›</button></div><div class="ths">${AIR.p.map((p,j)=>`<div class="th ${j===AIR.i?'sel':''}" role="button" tabindex="0" data-aj="${j}" aria-label="${j+1}페이지">${mini(p,j+1)}</div>`).join('')}</div>`;fit()}
+$('#airb').onclick=e=>{const a=e.target.closest('[data-ai]'),j=e.target.closest('[data-aj]');if(a)AIR.i=(AIR.i+ +a.dataset.ai+AIR.p.length)%AIR.p.length;else if(j)AIR.i=+j.dataset.aj;else return;renderAIR()};
+$('#airsave').onclick=()=>{D.entries.unshift(...AIR.p);AIR={p:[],i:0};toast('다이어리에 저장했어요 💗');go('home')};
+$('#airedit').onclick=()=>{const e=AIR.p[AIR.i];if(!e)return;D.entries.unshift(...AIR.p);AIR={p:[],i:0};openEdit(e)};
 function renderPV(){
  $('#pmodes').innerHTML=[['3d','3D 책'],['spread','속지 펼침'],['desk','책상 목업']].map(m=>`<button class="chip ${pvm===m[0]?'sel':''}" data-pm="${m[0]}">${m[1]}</button>`).join('');
  const box=$('#pv');
